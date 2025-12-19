@@ -1,0 +1,4 @@
+CREATE TABLE `source_xqs_test_xqs_user111`(`password` STRING,`id` INT,`username` STRING,PRIMARY KEY (id) NOT ENFORCED ) WITH ('connector' = 'postgres-cdc','slot.name' = '[slot.name]','schema-name' = 'xqs_test','decoding.plugin.name' = 'pgoutput','datasource.name' = 'xqs_pg','table-name' = 'xqs_user111','changelog-mode' = 'all');
+CREATE TABLE `sink_TESTXN_xqs_user`(`id` DECIMAL(38,0),`password` STRING,`username` STRING,PRIMARY KEY (id) NOT ENFORCED ) WITH ('connector' = 'jdbc','datasource.name' = 'xqs_oracle','table-name' = 'TESTXN."xqs_user"');
+INSERT INTO `sink_TESTXN_xqs_user`
+SELECT CAST(`id` AS DECIMAL(38,0)) AS `id`,CAST(`password` AS STRING) AS `password`,CAST(`username` AS STRING) AS `username` FROM `source_xqs_test_xqs_user111`;
